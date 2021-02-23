@@ -8,7 +8,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--outputdirectory', help="the path to the directory of the output files", required=True)
 args = parser.parse_args()
-update_dates = os.environ["UPDATE_DATES"] == 'True'
+update_dates = os.environ["UPDATE_DATES"]
 
 
 def transform(inputfile, inputfile_mongo):
@@ -40,6 +40,8 @@ def openfile(file_name):
 
 
 def fields_to_change(elastic_concept):
+    print(isinstance(update_dates, bool))
+    print('Update dates: ' + str(update_dates))
     if update_dates is True:
         return {"issued": date_string_to_long(elastic_concept["_source"]["harvest"]["firstHarvested"]),
                 "modified": date_string_to_long(elastic_concept["_source"]["harvest"]["lastChanged"])}
