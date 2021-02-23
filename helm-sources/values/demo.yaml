@@ -1,4 +1,4 @@
 #DValues for demo environment
 NAMESPACE: demo
-ELASTIC_IMCAT_INDEX: ccat_v23
+ELASTIC_CCAT_INDEX: ccat_v23
 UPDATE_DATES: False
