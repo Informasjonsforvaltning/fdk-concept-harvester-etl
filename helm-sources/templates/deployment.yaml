@@ -23,8 +23,8 @@ spec:
       - env:
           - name: ELASTIC_CCAT_INDEX
             value: {{ required "Missing value ELASTIC_CCAT_INDEX" .Values.ELASTIC_CCAT_INDEX }}
-          - name: UPDATE_DATES
-            value: {{ required "Missing value UPDATE_DATES" .Values.UPDATE_DATES }}
+          - name: TO_BE_UPDATED
+            value: {{ required "Missing value TO_BE_UPDATED" .Values.TO_BE_UPDATED | quote }}
           - name: MONGO_USERNAME
             valueFrom:
               secretKeyRef:

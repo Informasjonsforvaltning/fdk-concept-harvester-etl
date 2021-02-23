@@ -11,7 +11,7 @@ args = parser.parse_args()
 connection = MongoClient(
     f"""mongodb://{os.environ['MONGO_USERNAME']}:{os.environ['MONGO_PASSWORD']}@mongodb:27017/conceptHarvester?authSource=admin&authMechanism=SCRAM-SHA-1""")
 db = connection.conceptHarvester
-update_dates = os.environ["UPDATE_DATES"]
+update_dates = os.environ["TO_BE_UPDATED"] == 'dates'
 
 with open(args.outputdirectory + 'concepts_transformed.json') as transformed_file:
     transformed_json = json.load(transformed_file)

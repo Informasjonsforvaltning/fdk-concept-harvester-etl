@@ -8,7 +8,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--outputdirectory', help="the path to the directory of the output files", required=True)
 args = parser.parse_args()
-update_dates = os.environ["UPDATE_DATES"]
+update_dates = os.environ["TO_BE_UPDATED"] == 'dates'
 
 
 def transform(inputfile, inputfile_mongo):
