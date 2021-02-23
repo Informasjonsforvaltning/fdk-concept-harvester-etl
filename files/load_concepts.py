@@ -16,10 +16,7 @@ update_dates = os.environ["TO_BE_UPDATED"] == 'dates'
 with open(args.outputdirectory + 'concepts_transformed.json') as transformed_file:
     transformed_json = json.load(transformed_file)
     for mongo_id in transformed_json:
-        print("Mongo_id: " + mongo_id)
         values = transformed_json[mongo_id]
-        print(isinstance(update_dates, bool))
-        print('Update dates: ' + str(update_dates))
         if update_dates is True:
             to_be_updated = {"issued": bson.Int64(int(values["issued"])),
                              "modified": bson.Int64(int(values["modified"]))}

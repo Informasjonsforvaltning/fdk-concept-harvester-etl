@@ -23,7 +23,10 @@ def transform(inputfile, inputfile_mongo):
     failed = {}
     for concept in array:
         uri = concept["_source"].get("identifier")
+        uri_new = concept["_source"].get("identifier").replace('https://dataverk.nav.no/digdir-api/terms', 'https://data.nav.no/digdir-api/terms')
         if mongo_ids.get(uri):
+            transformed[uri] = fields_to_change(concept)
+        elif mongo_ids.get(uri_new):
             transformed[uri] = fields_to_change(concept)
         else:
             failed[uri] = "Not found in mongo"
@@ -40,8 +43,6 @@ def openfile(file_name):
 
 
 def fields_to_change(elastic_concept):
-    print(isinstance(update_dates, bool))
-    print('Update dates: ' + str(update_dates))
     if update_dates is True:
         return {"issued": date_string_to_long(elastic_concept["_source"]["harvest"]["firstHarvested"]),
                 "modified": date_string_to_long(elastic_concept["_source"]["harvest"]["lastChanged"])}
