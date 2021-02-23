@@ -3,7 +3,6 @@ import os
 from pymongo import MongoClient
 import argparse
 import bson
-from datetime import datetime
 
 
 parser = argparse.ArgumentParser()
