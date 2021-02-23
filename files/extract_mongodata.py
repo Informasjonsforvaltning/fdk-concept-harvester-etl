@@ -10,7 +10,7 @@ args = parser.parse_args()
 connection = MongoClient(
     f"""mongodb://{os.environ['MONGO_USERNAME']}:{os.environ['MONGO_PASSWORD']}@mongodb:27017/conceptHarvester?authSource=admin&authMechanism=SCRAM-SHA-1""")
 db = connection.conceptHarvester
-dict_list = list(db.conceptHarvester.find({}, {"_id": 1}))
+dict_list = list(db.conceptMeta.find({}, {"_id": 1}))
 ids = {}
 for id_dict in dict_list:
     id_str = id_dict["_id"]
