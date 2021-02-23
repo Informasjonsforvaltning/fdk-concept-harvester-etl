@@ -1,0 +1,4 @@
+#DValues for prod environment
+NAMESPACE: prod
+ELASTIC_IMCAT_INDEX: ccat_v60
+UPDATE_DATES: False
