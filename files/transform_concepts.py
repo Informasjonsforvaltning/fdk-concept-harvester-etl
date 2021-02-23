@@ -41,14 +41,10 @@ def openfile(file_name):
 
 def fields_to_change(elastic_concept):
     if update_dates is True:
-        return {"issued": date_string_to_long(elastic_concept["_source"]["harvest"]["firstHarvested"]),
-                "modified": date_string_to_long(elastic_concept["_source"]["harvest"]["lastHarvested"])}
+        return {"issued": elastic_concept["_source"]["harvest"]["firstHarvested"],
+                "modified": elastic_concept["_source"]["harvest"]["lastHarvested"]}
     else:
         return {"fdkId": elastic_concept["_id"]}
-
-
-def date_string_to_long(date_string):
-    return f'{int(datetime.fromisoformat(date_string).timestamp())}000'
 
 
 inputfileName = args.outputdirectory + "concepts.json"
