@@ -30,7 +30,7 @@ jobs:
       run: docker build . -t eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:latest -t eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:$GITHUB_SHA
 
     - name: Publish docker image to Google Cloud
-      run: docker -- push eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl
+      run: docker -- push eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl -a
 
     - name: Apply Helm template
       run: |
