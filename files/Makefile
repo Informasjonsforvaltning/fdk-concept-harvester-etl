@@ -9,9 +9,9 @@ transform:
 	echo "Filtering concepts...."
 	python3 -u ./transform_concepts.py -o ./tmp/
 
-load:
+delete:
 	echo "Deleting concepts...."
-	python3 ./load_concepts.py -o ./tmp/
+	python3 ./delete_concepts.py -o ./tmp/
 
 clean:
 	rm ./tmp/*.json
