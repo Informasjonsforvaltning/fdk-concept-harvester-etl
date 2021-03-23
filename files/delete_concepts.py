@@ -15,9 +15,10 @@ headers = {'Content-Type': 'application/json'}
 with open(args.outputdirectory + 'unmatched_concepts.json') as transformed_file:
     transformed_json = json.load(transformed_file)
     totalDeleted = 0
-    print("Deleting the following data from Begrep index: " + transformed_json)
     for concept in transformed_json:
-        elastic_id = concept["id"]
+        to_be_deleted = transformed_json[concept]
+        print("Deleting the following data from Begrep index: " + str(to_be_deleted))
+        elastic_id = to_be_deleted['id']
         delete_url = url + elastic_id
         print("Deleting from the following url: ", delete_url)
         r = requests.delete(delete_url, headers=headers)
