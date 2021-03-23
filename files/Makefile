@@ -6,11 +6,11 @@ extract:
 	python3 ./extract_concepts.py -o ./tmp/
 
 transform:
-	echo "Transforming concepts...."
+	echo "Filtering concepts...."
 	python3 -u ./transform_concepts.py -o ./tmp/
 
 load:
-	echo "Loading concepts...."
+	echo "Deleting concepts...."
 	python3 ./load_concepts.py -o ./tmp/
 
 clean:

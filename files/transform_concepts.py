@@ -26,7 +26,6 @@ with open(conceptsfileName) as concepts_file:
                 nav_concept = elastic_concept["_source"]["identifier"]
                 if nav_concept not in concepts:
                     count += 1
-                    exclude[count] = nav_concept
-                    print(str(exclude))
+                    exclude[count] = {"id": elastic_concept["_id"], "identifier": nav_concept}
         with open(outputfileName, 'w', encoding="utf-8") as outfile:
             json.dump(exclude, outfile, ensure_ascii=False, indent=4)

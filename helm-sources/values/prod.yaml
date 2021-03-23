@@ -1,4 +1,4 @@
 #DValues for prod environment
 NAMESPACE: prod
-ELASTIC_CCAT_INDEX: ccat_v60
+ELASTIC_CCAT_INDEX: ccat_v61
 TO_BE_UPDATED: "fdkId"

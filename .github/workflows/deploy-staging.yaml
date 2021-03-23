@@ -3,7 +3,7 @@ name: Build and deploy to staging on push
 on:
   push:
     branches:
-      - no
+      - chore/hos/remove-nav-concepts
 
 jobs:
   build-and-deploy:

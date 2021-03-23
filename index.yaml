@@ -3,12 +3,12 @@ entries:
   fdk-concept-harvester-etl:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-23T13:14:39.562806096+01:00"
+    created: "2021-03-23T16:21:17.054468426+01:00"
     description: Config for FDK concept harvester etl
-    digest: 046c08b9538d812241ca4f8cb0952e8bfcc9a0d471dbd779e9b4e8872760a569
+    digest: e4e04c960e838dea8e61e5752b8486b553c79bb8cd222109abf893087a2ee6e5
     home: https://github.com/Informasjonsforvaltning/fdk-concept-harvester-etl
     name: fdk-concept-harvester-etl
     urls:
     - https://informasjonsforvaltning.github.io/fdk-concept-harvester-etl/fdk-concept-harvester-etl-0.1.0.tgz
     version: 0.1.0
-generated: "2021-02-23T13:14:39.559153158+01:00"
+generated: "2021-03-23T16:21:17.053934602+01:00"
