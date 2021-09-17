@@ -1,22 +1,41 @@
 import json
-import requests
 import os
-
+from pymongo import MongoClient
 import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--outputdirectory', help="the path to the directory of the output files", required=True)
 args = parser.parse_args()
+connection = MongoClient(
+    f"""mongodb://{os.environ['MONGO_USERNAME']}:{os.environ['MONGO_PASSWORD']}@mongodb:27017/conceptHarvester?authSource=admin&authMechanism=SCRAM-SHA-1""")
 
-data = json.loads(
-    '{"query":{"bool":{"must":[{"match_all":{}}],"must_not":[],"should":[]}},"from":0,"size":10000,"sort":[],"aggs":{}}')
-host = 'http://elasticsearch5:9200/'
-url = host + os.environ["ELASTIC_CCAT_INDEX"] + "/_search"
-headers = {'Content-Type': 'application/json'}
+db = connection.conceptHarvester
+concept_list = list(db.conceptMeta.find())
+conceptMetas = {}
+for id_dict in concept_list:
+    _id = id_dict["_id"]
+    conceptMetas[_id] = {}
+    conceptMetas[_id]["fdkId"] = _id.get("fdkId")
+    conceptMetas[_id]["isPartOf"] = _id.get("isPartOf")
+    conceptMetas[_id]["issued"] = _id.get("issued")
+    conceptMetas[_id]["modified"] = _id.get("modified")
+    conceptMetas[_id]["_class"] = _id.get("_class")
+print("Total number of extracted conceptMetas: " + str(len(conceptMetas)))
 
-print("Posting to the following url: ", url)
-print("Posting to publisher index the following data:\n", data)
-# Load the publisher by posting the data:
-r = requests.post(url, json=data, headers=headers)
-with open(args.outputdirectory + 'concepts.json', 'w', encoding="utf-8") as outfile:
-    json.dump(r.json(), outfile, ensure_ascii=False, indent=4)
+with open(args.outputdirectory + 'mongo_conceptMeta.json', 'w', encoding="utf-8") as outfile:
+    json.dump(conceptMetas, outfile, ensure_ascii=False, indent=4)
+
+collection_list = list(db.collectionMeta.find())
+collectionMetas = {}
+for id_dict in collection_list:
+    _id = id_dict["_id"]
+    collectionMetas[_id] = {}
+    collectionMetas[_id]["fdkId"] = _id.get("fdkId")
+    collectionMetas[_id]["concepts"] = _id.get("concepts")
+    collectionMetas[_id]["issued"] = _id.get("issued")
+    collectionMetas[_id]["modified"] = _id.get("modified")
+    collectionMetas[_id]["_class"] = _id.get("_class")
+print("Total number of extracted collectionMetas: " + str(len(collectionMetas)))
+
+with open(args.outputdirectory + 'mongo_collectionMeta.json', 'w', encoding="utf-8") as outfile:
+    json.dump(collectionMetas, outfile, ensure_ascii=False, indent=4)
