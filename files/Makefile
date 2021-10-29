@@ -6,12 +6,12 @@ extract:
 	python3 ./extract_concepts.py -o ./tmp/
 
 transform:
-	echo "Filtering concepts...."
+	echo "Transforming concepts..."
 	python3 -u ./transform_concepts.py -o ./tmp/
 
-delete:
-	echo "Deleting concepts...."
-	python3 ./delete_concepts.py -o ./tmp/
+load:
+    echo "Loading new/deleting old concepts..."
+    python3 -u ./load_concepts.py -o ./tmp/
 
 clean:
 	rm ./tmp/*.json

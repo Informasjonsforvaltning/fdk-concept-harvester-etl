@@ -15,9 +15,9 @@ conceptMetas = {}
 for id_dict in concept_list:
     _id = id_dict["_id"]
     conceptMetas[_id] = {}
-    conceptMetas[_id]["fdkId"] = _id.get("fdkId")
-    conceptMetas[_id]["issued"] = _id.get("issued")
-    conceptMetas[_id]["modified"] = _id.get("modified")
+    conceptMetas[_id]["fdkId"] = id_dict.get("fdkId")
+    conceptMetas[_id]["issued"] = id_dict.get("issued")
+    conceptMetas[_id]["modified"] = id_dict.get("modified")
 print("Total number of extracted conceptMetas: " + str(len(conceptMetas)))
 
 with open(args.outputdirectory + 'mongo_conceptMeta.json', 'w', encoding="utf-8") as outfile:
