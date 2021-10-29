@@ -28,9 +28,9 @@ collectionMetas = {}
 for id_dict in collection_list:
     _id = id_dict["_id"]
     collectionMetas[_id] = {}
-    collectionMetas[_id]["fdkId"] = _id.get("fdkId")
-    collectionMetas[_id]["issued"] = _id.get("issued")
-    collectionMetas[_id]["modified"] = _id.get("modified")
+    collectionMetas[_id]["fdkId"] = id_dict.get("fdkId")
+    collectionMetas[_id]["issued"] = id_dict.get("issued")
+    collectionMetas[_id]["modified"] = id_dict.get("modified")
 print("Total number of extracted collectionMetas: " + str(len(collectionMetas)))
 
 with open(args.outputdirectory + 'mongo_collectionMeta.json', 'w', encoding="utf-8") as outfile:

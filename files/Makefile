@@ -6,8 +6,8 @@ extract:
 	python3 ./extract_concepts.py -o ./tmp/
 
 transform:
-	echo "Transforming concepts..."
-	python3 -u ./transform_concepts.py -o ./tmp/
+    echo "Transforming concepts..."
+    python3 -u ./transform_concepts.py -o ./tmp/
 
 load:
     echo "Loading new/deleting old concepts..."
