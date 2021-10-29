@@ -16,10 +16,8 @@ for id_dict in concept_list:
     _id = id_dict["_id"]
     conceptMetas[_id] = {}
     conceptMetas[_id]["fdkId"] = _id.get("fdkId")
-    conceptMetas[_id]["isPartOf"] = _id.get("isPartOf")
     conceptMetas[_id]["issued"] = _id.get("issued")
     conceptMetas[_id]["modified"] = _id.get("modified")
-    conceptMetas[_id]["_class"] = _id.get("_class")
 print("Total number of extracted conceptMetas: " + str(len(conceptMetas)))
 
 with open(args.outputdirectory + 'mongo_conceptMeta.json', 'w', encoding="utf-8") as outfile:
@@ -31,10 +29,8 @@ for id_dict in collection_list:
     _id = id_dict["_id"]
     collectionMetas[_id] = {}
     collectionMetas[_id]["fdkId"] = _id.get("fdkId")
-    collectionMetas[_id]["concepts"] = _id.get("concepts")
     collectionMetas[_id]["issued"] = _id.get("issued")
     collectionMetas[_id]["modified"] = _id.get("modified")
-    collectionMetas[_id]["_class"] = _id.get("_class")
 print("Total number of extracted collectionMetas: " + str(len(collectionMetas)))
 
 with open(args.outputdirectory + 'mongo_collectionMeta.json', 'w', encoding="utf-8") as outfile:

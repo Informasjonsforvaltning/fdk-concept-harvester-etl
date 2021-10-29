@@ -6,33 +6,48 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--outputdirectory', help="the path to the directory of the output files", required=True)
 args = parser.parse_args()
-new_base_uri = os.environ['FDK_REGISTRATION_BASE_URI']
+new_base_uri = os.environ['NEW_URI']
+old_base_uri = os.environ['OLD_URI']
 
 
-def transform(inputfile, inputfile2):
+def transform(inputfile, meta_type):
 
-    datasets = openfile(inputfile)
-    datasets_meta = openfile(inputfile2)
-    transformed_datasets = {}
-    print("Total number of extracted datasets: " + str(len(datasets)))
-    for dataset_key in datasets:
-        old_uri = datasets[dataset_key].get("uri")
-        new_uri = create_uri(datasets[dataset_key])
-        to_be_transformed = datasets_meta.get(old_uri)
-        if to_be_transformed:
-            transformed = transform_catalog(to_be_transformed, new_uri)
-            transformed_datasets[old_uri] = transformed
-    return transformed_datasets
+    meta = openfile(inputfile)
+    transformed_meta = {}
+    meta_to_delete = []
+
+    for meta_key in meta:
+        if is_old_uri(meta_key):
+            transformed_meta[transform_uri(meta_key)] = transform_fields(meta[meta_key])
+            meta_to_delete.append(meta_key)
+
+    if meta_type == "concepts":
+        output = args.outputdirectory + "conceptMeta_to_delete.json"
+        with open(output, 'w', encoding="utf-8") as delete_file:
+            json.dump(meta_to_delete, delete_file, ensure_ascii=False, indent=4)
+    elif meta_type == "collections":
+        output = args.outputdirectory + "collectionMeta_to_delete.json"
+        with open(output, 'w', encoding="utf-8") as delete_file:
+            json.dump(meta_to_delete, delete_file, ensure_ascii=False, indent=4)
+
+    return transformed_meta
 
 
-def transform_catalog(to_be_transformed, new_id):
-    transformed = to_be_transformed
-    transformed["_id"] = new_id
-    return transformed
+def transform_fields(meta):
+    return {"fdkId": meta["fdkId"],
+            "issued": meta["issued"],
+            "modified": meta["modified"]}
 
 
-def create_uri(dataset):
-    return new_base_uri + '/catalogs/' + dataset["org_id"] + "/datasets/" + dataset["ds_id"]
+def transform_uri(uri):
+    return uri.replace(old_base_uri, f'{new_base_uri}/collections')
+
+
+def is_old_uri(uri):
+    if old_base_uri in uri:
+        return True
+    else:
+        return False
 
 
 def openfile(file_name):
@@ -41,13 +56,16 @@ def openfile(file_name):
 
 
 inputfileName = args.outputdirectory + "mongo_conceptMeta.json"
-inputfileName2 = args.outputdirectory + "mongo_collectionMeta.json"
 outputfileName = args.outputdirectory + "conceptMeta_transformed.json"
-outputfileName2 = args.outputdirectory + "collectionMeta_transformed.json"
-
 
 with open(outputfileName, 'w', encoding="utf-8") as outfile:
-    json.dump(transform(inputfileName, inputfileName2), outfile, ensure_ascii=False, indent=4)
+    json.dump(transform(inputfileName, "concepts"), outfile, ensure_ascii=False, indent=4)
+
+inputfileName2 = args.outputdirectory + "mongo_collectionMeta.json"
+outputfileName2 = args.outputdirectory + "collectionMeta_transformed.json"
+
+with open(outputfileName2, 'w', encoding="utf-8") as outfile:
+    json.dump(transform(inputfileName2, "collections"), outfile, ensure_ascii=False, indent=4)
 
 
 # 1: extract conceptMeta og collectionMeta

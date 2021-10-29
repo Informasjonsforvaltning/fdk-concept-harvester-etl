@@ -1,4 +1,2 @@
 #DValues for staging environment
 NAMESPACE: staging
-ELASTIC_CCAT_INDEX: ccat_v11
-TO_BE_UPDATED: "fdkId"

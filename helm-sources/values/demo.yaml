@@ -1,4 +1,2 @@
 #DValues for demo environment
 NAMESPACE: demo
-ELASTIC_CCAT_INDEX: ccat_v23
-TO_BE_UPDATED: "fdkId"

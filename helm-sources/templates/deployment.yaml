@@ -21,25 +21,31 @@ spec:
     spec:
       containers:
       - env:
-          - name: ELASTIC_CCAT_INDEX
-            value: {{ required "Missing value ELASTIC_CCAT_INDEX" .Values.ELASTIC_CCAT_INDEX }}
-          - name: TO_BE_UPDATED
-            value: {{ required "Missing value TO_BE_UPDATED" .Values.TO_BE_UPDATED | quote }}
-          - name: MONGO_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: mongo-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: MONGO_USERNAME
-          - name: MONGO_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mongo-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: MONGO_PASSWORD
-          - name: NAMESPACE
-            valueFrom:
-              secretKeyRef:
-                name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                key: NAMESPACE
+        - name: MONGO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: MONGO_USERNAME
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: MONGO_PASSWORD
+        - name: NAMESPACE
+          valueFrom:
+            secretKeyRef:
+              name: common-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: NAMESPACE
+        - name: NEW_URI
+          valueFrom:
+            secretKeyRef:
+              name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: CONCEPT_CATALOG_BASE_URI
+        - name: OLD_URI
+          valueFrom:
+            secretKeyRef:
+              name: commonurl-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+              key: CONCEPT_CATALOGUE_COLLECTION_BASE_URI
         image: {{ required "Missing value DOCKER_IMAGE_NAME" .Values.DOCKER_IMAGE_NAME }}
         imagePullPolicy: Always
         name: fdk-concept-harvester-etl
