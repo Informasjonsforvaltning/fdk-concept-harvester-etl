@@ -74,8 +74,8 @@ def delete(del_file, meta_type):
             print("Delete failed: " + mongo_id)
             total_failed += 1
             fail_log[mongo_id] = mongo_id
-    print("Total number of datasets updated: " + str(total_deleted))
-    print("Total number of datasets skipped: " + str(total_failed))
+    print("Total number of " + meta_type + " deleted: " + str(total_deleted))
+    print("Total number of " + meta_type + " deletion failed: " + str(total_failed))
     with open(args.outputdirectory + meta_type + "_delete_errors.json", 'w', encoding="utf-8") as err_file:
         json.dump(fail_log, err_file, ensure_ascii=False, indent=4)
 
