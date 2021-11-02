@@ -35,7 +35,7 @@ jobs:
 
     - name: Apply Helm template
       run: |
-        helm template --set DOCKER_IMAGE_NAME="eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:$GITHUB_SHA" -f ./helm-sources/values/demo.yaml ./helm-sorces/ > ./kubectlapply.yaml
+        helm template --set DOCKER_IMAGE_NAME="eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:$GITHUB_SHA" -f ./helm-sources/values/demo.yaml ./helm-sources/ > ./kubectlapply.yaml
         chmod o+w ./kubectlapply.yaml
         cat kubectlapply.yaml
 
