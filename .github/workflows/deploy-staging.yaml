@@ -3,7 +3,7 @@ name: Build and deploy to staging on push
 on:
   push:
     branches:
-      - no
+      - chore/hos/update-concept-uris
 
 jobs:
   build-and-deploy:
@@ -19,10 +19,9 @@ jobs:
         python-version: 3.7
 
     - name: Setup gcloud CLI for image-store
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/auth@v0
       with:
-        service_account_key: ${{ secrets.GCP_SA_DIGDIR_FDK_GCR_KEY }}
-        export_default_credentials: true
+        credentials_json: ${{ secrets.GCP_SA_DIGDIR_FDK_GCR_KEY }}
 
     - name: Configure docker to use the gcloud command-line tool as a credential helper
       run: gcloud auth configure-docker eu.gcr.io
@@ -35,15 +34,16 @@ jobs:
 
     - name: Apply Helm template
       run: |
-        helm template --set DOCKER_IMAGE_NAME="eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:$GITHUB_SHA" -f ./helm-sources/values/staging.yaml ./helm-sources/  > ./kubectlapply.yaml
+        helm template --set DOCKER_IMAGE_NAME="eu.gcr.io/digdir-fdk-infra/fdk-concept-harvester-etl:$GITHUB_SHA" \
+        -f ./helm-sources/values/staging.yaml \
+        ./helm-sources/  > ./kubectlapply.yaml
         chmod o+w ./kubectlapply.yaml
         cat kubectlapply.yaml
 
     - name: Setup gcloud CLI for deploy
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/auth@v0
       with:
-        service_account_key: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
-        export_default_credentials: true
+        credentials_json: ${{ secrets.DIGDIR_FDK_DEV_AUTODEPLOY }}
 
     - name: Deploy to GCP
       run: |
