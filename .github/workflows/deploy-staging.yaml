@@ -3,7 +3,7 @@ name: Build and deploy to staging on push
 on:
   push:
     branches:
-      - chore/hos/update-concept-uris
+      - no
 
 jobs:
   build-and-deploy:

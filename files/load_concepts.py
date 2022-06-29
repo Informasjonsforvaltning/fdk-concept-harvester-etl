@@ -39,7 +39,7 @@ def load(load_file):
         json.dump(fail_log, err_file, ensure_ascii=False, indent=4)
 
 
-def delete(del_file, meta_type):
+def delete(del_file):
     delete_json = json.load(del_file)
     total_deleted = 0
     total_failed = 0
@@ -51,7 +51,6 @@ def delete(del_file, meta_type):
         print("Deleting ID: " + mongo_id)
         delete_result = db.conceptMeta.delete_one({"_id": mongo_id})
         if delete_result.deleted_count > 0:
-            print("Successfully deleted: " + mongo_id)
             total_deleted += 1
         else:
             print("Delete failed: " + mongo_id)
