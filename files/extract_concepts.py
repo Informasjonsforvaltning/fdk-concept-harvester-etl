@@ -15,6 +15,7 @@ conceptMetas = {}
 for id_dict in concept_list:
     _id = id_dict["_id"]
     conceptMetas[_id] = {}
+    conceptMetas[_id]["_id"] = _id
     conceptMetas[_id]["fdkId"] = id_dict.get("fdkId")
     conceptMetas[_id]["issued"] = id_dict.get("issued")
     conceptMetas[_id]["modified"] = id_dict.get("modified")
